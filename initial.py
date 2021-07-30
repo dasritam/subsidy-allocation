@@ -8,9 +8,9 @@ def gen_popn(N=10000, c_min=10, a=5):
     mu = a*u * np.exp(np.divide(-u, a))
     mu[u < a] = a**2/np.e
     beta = np.random.uniform(np.zeros((N, 1)), c*u/mu)
-    beta[u == 0] = np.random.uniform(np.zeros((N, 1)), c/mu)[u == 0]
+    beta[u > a] = np.random.uniform(np.zeros((N, 1)), c/mu)[u > a]
     psi = beta*mu/c
-    psi[u != 0] = (beta*mu/(u*c))[u != 0]
+    psi[u > a] = (beta*mu/(u*c))[u > a]
     popn = np.column_stack((u, c, mu, beta, psi))
     return popn
 
