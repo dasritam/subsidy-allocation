@@ -7,7 +7,10 @@ def gen_popn(N=10000, c_min=10, a=5):
         c_min**2  # np.zeros(shape=(N, 1))
     mu = a*u * np.exp(np.divide(-u, a))
     mu[mu < a] = a**2/np.e
-    beta = np.random.uniform(np.zeros((N, 1)), c/mu)
+    beta = np.random.uniform(np.zeros((N, 1)), c*u/mu)
     psi = beta*mu/c
+    psi[u != 0] = (beta*mu/(u*c))[u != 0]
     popn = np.column_stack((u, c, mu, beta, psi))
     return popn
+    
+print(gen_popn())
