@@ -6,7 +6,7 @@ def gen_popn(N=10000, c_min=10, a=5):
     u = np.random.exponential(0.4, size=(N, 1)) * \
         c_min**2  # np.zeros(shape=(N, 1))
     mu = a*u * np.exp(np.divide(-u, a))
-    mu[mu < a] = a**2/np.e
+    mu[u < a] = a**2/np.e
     beta = np.random.uniform(np.zeros((N, 1)), c*u/mu)
     beta[u == 0] = np.random.uniform(np.zeros((N, 1)), c/mu)[u == 0]
     psi = beta*mu/c
