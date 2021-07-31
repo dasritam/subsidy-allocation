@@ -117,10 +117,11 @@ def subsidy (goal) :
 
 def HowManyBenefit(target):
     global xi,N,sorteddata
-    try: N
-    except NameError: N = len(sorteddata) 
     try: sorteddata
     except NameError: sort_data()
+    try: N
+    except NameError: N = len(sorteddata) 
+
     # Corner cases
     if (target <= subsidy(1)):
         return 0
@@ -191,7 +192,7 @@ def viewresults() :
     plt.ylim(ymin,ymax)
     plt.ylabel("Ruin probability")
     plt.xlabel("Agent number")
-    plt.title("RP after allocation")
+    plt.title("RP After Allocation")
     plt.show()
 
 #------------------------------------------------------------------------------------------------------------------------------------
@@ -219,6 +220,25 @@ def setrplimit (goal) :
         else :
             xi.append(((sdc[3]*sdc[4])/(goal*sdc[2])) - sdc[1])
         current+=1
-    return sum(xi),len(xi)
+    return sum(xi)
 
+#------------------------------------------------------------------------------------------------------------------------------------
+
+def statistics(scheme,show_subsidy=False) :
+    import matplotlib.pyplot as plt
+    global xi,N
+    try: N
+    except NameError: N = len(sorteddata) 
+    print(f"Scheme : {scheme}")
+    print(f"Percentage population helped : {len(xi)*100/N}%")
+    print(f"Budget required : {round(sum(xi),3)} units")
+    print(f"RP Limit : {sorteddata[len(xi)][-1]}")
+    if show_subsidy :
+        plt.style.use("dark_background")
+        plt.scatter(range(len(xi)),xi,color='r')
+        plt.xlabel("Agent Number")
+        plt.ylabel("Income subsidy")
+        plt.title(scheme)
+    return
+        
 #------------------------------------------------------------------------------------------------------------------------------------
